@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.ming</groupId>
+    <artifactId>Azgalor</artifactId>
+    <version>0.0.1</version>
+  </parent>
+  <artifactId>Azgalor-webs</artifactId>
+  <packaging>war</packaging>
+  <name>Azgalor-webs Maven Webapp</name>
+  <url>http://maven.apache.org</url>
+  <dependencies>
+    <dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jsp-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.ming</groupId>
+			<artifactId>Azgalor-base</artifactId>
+			<version>0.0.1</version>
+		</dependency>
+  </dependencies>
+  <build>
+    <finalName>Azgalor-webs</finalName>
+  </build>
+</project>
