@@ -1,4 +1,4 @@
-package org.Azgalor.mongodb.utils;
+package org.Azgalor.hadoop.util;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -6,18 +6,18 @@ import java.util.Properties;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-public enum MongoPop {
+public enum HadoopPop {
 	INSTANCE;
 	private Properties prop;
 
-	private MongoPop() {
+	private HadoopPop() {
 		Properties _prop = new Properties();
 		try {
-			_prop.load(MongoPop.class.getResourceAsStream("mongodb.properties"));
+			_prop.load(HadoopPop.class.getResourceAsStream("hadoop.properties"));
 			this.prop = _prop;
 		} catch (IOException e) {
-			Logger log = LogManager.getLogger(MongoPop.class);
-			log.error("Mongodb的配置文件读取io错误：", e);
+			Logger log = LogManager.getLogger(HadoopPop.class);
+			log.error("HadoopPop的配置文件读取io错误：", e);
 		}
 	}
 

@@ -65,7 +65,9 @@
 			<!-- /.container-fluid -->
 		</nav>
 
-		<div class="jumbotron">
+	</div>
+	<div class="jumbotron">
+		<div class="container">
 			<h1>欢迎登陆问卷调查系统</h1>
 			<p>点击下面的按钮可以直接开始问卷调查，无需账号登陆</p>
 			<p>
@@ -76,10 +78,11 @@
 </body>
 <%@include file="/commons/jsp/Javascript.jsp"%>
 <script type="text/javascript">
-	$('.jumbotron').backstretch([ "commons/images/background/city_lights_aerial_view.jpg",
-			"commons/images/background/spectacular.jpg" ], {
-		duration : 20000,
-		fade : 2000
-	});
+	$('.jumbotron').backstretch(
+			[ "commons/images/background/city_lights_aerial_view.jpg",
+					"commons/images/background/spectacular.jpg" ], {
+				duration : 20000,
+				fade : 2000
+			});
 </script>
 </html>

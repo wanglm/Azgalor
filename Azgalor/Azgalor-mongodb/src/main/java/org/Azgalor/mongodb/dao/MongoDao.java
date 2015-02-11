@@ -6,6 +6,7 @@ import org.Azgalor.mongodb.MongoEntity;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.WriteResult;
@@ -61,7 +62,7 @@ public abstract class MongoDao<T extends MongoEntity<?>> {
 		obj.put("_id", t.getId());// 设置查询的主键
 		obj = dc.findOne(obj);// 查询要更新的数据对象
 		WriteResult wr = dc.update(obj, new BasicDBObject("$set", t));// 更新属性，如果直接用t则是替换更新
-		return wr.getLastError().ok();
+		return wr.isUpdateOfExisting();
 	}
 
 	public boolean delete(T t) {
@@ -78,8 +79,16 @@ public abstract class MongoDao<T extends MongoEntity<?>> {
 	}
 
 	public List<DBObject> find(String dbName, String collection, DBObject obj) {
-		DBCollection dc = this.getCollection(dbName, collection);
-		return dc.find(obj).toArray();
+		List<DBObject> list=null;
+		DBCursor cursor=null;
+		try{
+			DBCollection dc = this.getCollection(dbName, collection);
+			cursor=dc.find(obj);
+			list=dc.find(obj).toArray();
+		}finally{
+			cursor.close();
+		}
+		return list;
 	}
 	
 	public long count(String dbName, String collection, DBObject obj){

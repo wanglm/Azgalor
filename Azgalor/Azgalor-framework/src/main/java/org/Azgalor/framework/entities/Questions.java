@@ -3,7 +3,7 @@ package org.Azgalor.framework.entities;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.Azgalor.framework.util.QuestionStatic;
+import org.Azgalor.framework.config.QuestionConfig;
 import org.Azgalor.mongodb.MongoEntity;
 import org.bson.types.ObjectId;
 
@@ -16,7 +16,7 @@ public class Questions extends MongoEntity<Questions> {
 	/**
 	 * 问卷题目类型
 	 * 
-	 * @see QuestionStatic
+	 * @see QuestionConfig
 	 */
 	private int type;
 	private List<String> options;

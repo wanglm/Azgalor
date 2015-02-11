@@ -1,6 +1,6 @@
-package org.Azgalor.framework.util;
+package org.Azgalor.framework.config;
 
-public class QuestionStatic {
+public class QuestionConfig {
 
 	/**
 	 * 普通

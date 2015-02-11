@@ -1,6 +1,6 @@
 package org.Azgalor.framework.entities;
 
-import org.Azgalor.framework.util.UsersStatic;
+import org.Azgalor.framework.config.UsersConfig;
 import org.Azgalor.mongodb.MongoEntity;
 import org.bson.types.ObjectId;
 
@@ -14,7 +14,7 @@ public class Users extends MongoEntity<Users> {
 	private String birthday;// 生日
 	private String email;// 邮箱
 	/**
-	 * @see UsersStatic
+	 * @see UsersConfig
 	 */
 	private int type;// 权限类型,0超级管理员，1普通管理员，2会员，3普通用户
 

@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.ming</groupId>
-  <artifactId>Azgalor</artifactId>
-  <version>0.0.1</version>
-  <packaging>pom</packaging>
+	<groupId>com.ming</groupId>
+	<artifactId>Azgalor</artifactId>
+	<version>0.0.1</version>
+	<packaging>pom</packaging>
 
-  <name>Azgalor</name>
-  <url>http://maven.apache.org</url>
+	<name>Azgalor</name>
+	<url>http://maven.apache.org</url>
 
-  <properties>
+	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<spring.version>4.0.5.RELEASE</spring.version>
 		<solr.version>4.10.0</solr.version>
 		<hadoop.version>2.6.0</hadoop.version>
+		<mongo-java-driver.version>2.13.0</mongo-java-driver.version>
 	</properties>
 
 	<dependencyManagement>
@@ -25,11 +27,6 @@
 				<scope>system</scope>
 				<systemPath>${JAVA_HOME}/lib/tools.jar</systemPath>
 				<version>1.8</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-context</artifactId>
-				<version>${spring.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>ognl</groupId>
@@ -89,31 +86,16 @@
 				<version>4.11</version>
 				<scope>test</scope>
 			</dependency>
+			
 			<dependency>
-				<groupId>org.hibernate</groupId>
-				<artifactId>hibernate-core</artifactId>
-				<version>4.1.9.Final</version>
-			</dependency>
-			<dependency>
-				<groupId>net.sf.json-lib</groupId>
-				<artifactId>json-lib</artifactId>
-				<version>2.4</version>
-				<classifier>jdk15</classifier>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context</artifactId>
+				<version>${spring.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-tx</artifactId>
 				<version>${spring.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>c3p0</groupId>
-				<artifactId>c3p0</artifactId>
-				<version>0.9.1.2</version>
-			</dependency>
-			<dependency>
-				<groupId>com.oracle</groupId>
-				<artifactId>ojdbc14</artifactId>
-				<version>10.2.0.4.0</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
@@ -125,7 +107,6 @@
 				<artifactId>aspectjweaver</artifactId>
 				<version>1.8.1</version>
 			</dependency>
-
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-context-support</artifactId>
@@ -141,12 +122,49 @@
 				<artifactId>spring-webmvc</artifactId>
 				<version>${spring.version}</version>
 			</dependency>
+
+			<!--quartz start -->
 			<dependency>
-				<groupId>mysql</groupId>
-				<artifactId>mysql-connector-java</artifactId>
-				<version>5.1.31</version>
+				<groupId>org.quartz-scheduler</groupId>
+				<artifactId>quartz</artifactId>
+				<version>2.2.1</version>
 			</dependency>
-			<!-- jackson2.x -->
+			<dependency>
+				<groupId>org.quartz-scheduler</groupId>
+				<artifactId>quartz-jobs</artifactId>
+				<version>2.2.1</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context-support</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<!--quartz end -->
+			
+			<!-- tika start -->
+			<dependency>
+				<groupId>org.apache.tika</groupId>
+				<artifactId>tika-core</artifactId>
+				<version>1.7</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.tika</groupId>
+				<artifactId>tika-parsers</artifactId>
+				<version>1.7</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.tika</groupId>
+				<artifactId>tika-translate</artifactId>
+				<version>1.7</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.tika</groupId>
+				<artifactId>tika-xmp</artifactId>
+				<version>1.7</version>
+			</dependency>
+			<!-- tika end -->
+
+			<!-- jackson2.x start -->
 			<dependency>
 				<groupId>com.fasterxml.jackson.core</groupId>
 				<artifactId>jackson-databind</artifactId>
@@ -162,7 +180,9 @@
 				<artifactId>jackson-annotations</artifactId>
 				<version>2.4.2</version>
 			</dependency>
-			<!-- solr必须 -->
+			<!-- jackson2.x end -->
+			
+			<!-- log4j start -->
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-log4j12</artifactId>
@@ -178,8 +198,9 @@
 				<artifactId>slf4j-api</artifactId>
 				<version>1.7.6</version>
 			</dependency>
-
-			<!-- solr必须 -->
+			<!-- log4j end -->
+			
+			<!-- solr start -->
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>jcl-over-slf4j</artifactId>
@@ -195,12 +216,23 @@
 				<artifactId>solr-solrj</artifactId>
 				<version>${solr.version}</version>
 			</dependency>
-			<!-- solr必须 -->
+			<!-- solr end -->
+			
+			<!-- hadoop start -->
 			<dependency>
 				<groupId>org.apache.hadoop</groupId>
 				<artifactId>hadoop-client</artifactId>
 				<version>${hadoop.version}</version>
 			</dependency>
+			<!-- mongodb end -->
+			
+			<!-- mongodb start -->
+			<dependency>
+				<groupId>org.mongodb</groupId>
+				<artifactId>mongo-java-driver</artifactId>
+				<version>${mongo-java-driver.version}</version>
+			</dependency>
+			<!-- mongodb end -->
 		</dependencies>
 	</dependencyManagement>
 	<build>
@@ -227,12 +259,12 @@
 			</plugin>
 		</plugins>
 	</reporting>
-  <modules>
-    <module>Azgalor-webs</module>
-    <module>Azgalor-hadoop</module>
-    <module>Azgalor-solr</module>
-    <module>Azgalor-mongodb</module>
-    <module>Azgalor-base</module>
-    <module>Azgalor-framework</module>
-  </modules>
+	<modules>
+		<module>Azgalor-webs</module>
+		<module>Azgalor-hadoop</module>
+		<module>Azgalor-solr</module>
+		<module>Azgalor-mongodb</module>
+		<module>Azgalor-base</module>
+		<module>Azgalor-framework</module>
+	</modules>
 </project>

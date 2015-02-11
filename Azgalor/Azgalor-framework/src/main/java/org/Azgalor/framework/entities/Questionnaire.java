@@ -2,8 +2,8 @@ package org.Azgalor.framework.entities;
 
 import java.util.List;
 
-import org.Azgalor.framework.util.QuestionStatic;
-import org.Azgalor.framework.util.UsersStatic;
+import org.Azgalor.framework.config.QuestionConfig;
+import org.Azgalor.framework.config.UsersConfig;
 import org.Azgalor.mongodb.MongoEntity;
 
 import com.mongodb.BasicDBObject;
@@ -15,13 +15,13 @@ public class Questionnaire extends MongoEntity<Questionnaire> {
 	/**
 	 * 问卷类型
 	 * 
-	 * @see QuestionStatic
+	 * @see QuestionConfig
 	 */
 	private int type;
 	/**
 	 * 用户权限类型
 	 * 
-	 * @see UsersStatic
+	 * @see UsersConfig
 	 */
 	private int userType;
 	private List<Question> list;

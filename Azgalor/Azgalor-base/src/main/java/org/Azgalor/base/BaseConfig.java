@@ -1,5 +1,5 @@
-package org.Azgalor.base.controller;
+package org.Azgalor.base;
 
-public class HadoopController {
+public class BaseConfig {
 
 }

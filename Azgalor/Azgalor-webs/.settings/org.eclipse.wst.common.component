@@ -4,6 +4,18 @@
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+        <dependent-module archiveName="Azgalor-framework-0.0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/Azgalor-framework/Azgalor-framework">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="Azgalor-hadoop-0.0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/Azgalor-hadoop/Azgalor-hadoop">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="Azgalor-mongodb-0.0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/Azgalor-mongodb/Azgalor-mongodb">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="Azgalor-solr-0.0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/Azgalor-solr/Azgalor-solr">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <dependent-module archiveName="Azgalor-base-0.0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/Azgalor-base/Azgalor-base">
             <dependency-type>uses</dependency-type>
         </dependent-module>
