@@ -1,13 +1,14 @@
 package org.Azgalor.framework.entities;
 
 import java.util.List;
+import java.util.Map;
 
 import org.Azgalor.framework.config.QuestionConfig;
 import org.Azgalor.framework.config.UsersConfig;
 import org.Azgalor.mongodb.MongoEntity;
+import org.bson.Document;
 
 import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
 
 public class Questionnaire extends MongoEntity<Questionnaire> {
 	private static final long serialVersionUID = -4098032903589684671L;
@@ -88,7 +89,13 @@ public class Questionnaire extends MongoEntity<Questionnaire> {
 	}
 
 	@Override
-	public Questionnaire convert(DBObject obj) {
+	public void putAll(Map<? extends String, ? extends Object> m) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public Questionnaire convert(Document doc) {
 		// TODO Auto-generated method stub
 		return null;
 	}

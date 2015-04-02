@@ -11,10 +11,11 @@ import org.Azgalor.framework.service.UserService;
 import org.Azgalor.mongodb.MongoFactory;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-import com.mongodb.DBObject;
+
 
 public class UserServiceImpl implements UserService {
 	private Logger log = LogManager.getLogger(UserServiceImpl.class);
@@ -28,7 +29,8 @@ public class UserServiceImpl implements UserService {
 		try {
 			UserDao dao = mf.get(UserDaoImpl.class);
 			if (user.getObjectId("_id") == null) {
-				msg.setSuccess(dao.insertUser(user));
+				dao.insertUser(user);
+				msg.setSuccess(true);
 				msg.setMessage("添加用户成功!");
 			} else {
 				msg.setSuccess(dao.updateUser(user));
@@ -51,43 +53,43 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<Users> listUsers(DBObject obj) {
+	public List<Users> listUsers(Document obj) {
 		List<Users> list = null;
 		try {
 			UserDao dao = mf.get(UserDaoImpl.class);
-			List<DBObject> _list = dao.listUser(obj);
+			List<Document> _list = dao.listUser(obj);
 			list = new ArrayList<Users>(_list.size());
-			for (DBObject o : _list) {
+			for (Document o : _list) {
 				Users user = new Users();
 				user = user.convert(o);
 				list.add(user);
 			}
 		} catch (Exception e) {
-			log.error("listUsers(DBObject obj)的错误", e);
+			log.error("listUsers(Document obj)的错误", e);
 		}
 		return list;
 	}
 
 	@Override
-	public Users findOneUsers(DBObject obj) {
+	public Users findOneUsers(Document obj) {
 		Users user = new Users();
 		try {
 			UserDao dao = mf.get(UserDaoImpl.class);
 			user = user.convert(dao.getUserById(obj.get("_id")));
 		} catch (Exception e) {
-			log.error("findOneUsers(DBObject obj)的错误", e);
+			log.error("findOneUsers(Document obj)的错误", e);
 		}
 		return user;
 	}
 
 	@Override
-	public long countUsers(DBObject obj) {
+	public long countUsers(Document obj) {
 		long count = 0;
 		try {
 			UserDao dao = mf.get(UserDaoImpl.class);
 			count = dao.countUsers(obj);
 		} catch (Exception e) {
-			log.error("countUsers(DBObject obj)的错误", e);
+			log.error("countUsers(Document obj)的错误", e);
 		}
 		return count;
 	}

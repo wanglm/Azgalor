@@ -8,9 +8,8 @@ import org.Azgalor.mongodb.annotations.MongoDBName;
 import org.Azgalor.mongodb.annotations.Mongoz;
 import org.Azgalor.mongodb.dao.MongoDao;
 import org.Azgalor.mongodb.enums.MongoType;
+import org.bson.Document;
 import org.springframework.stereotype.Repository;
-
-import com.mongodb.DBObject;
 
 @Repository
 @Mongoz(MongoType.SIMPLE)
@@ -19,27 +18,27 @@ import com.mongodb.DBObject;
 public class QuestionDaoImpl extends MongoDao<Questions> implements QuestionDao {
 
 	@Override
-	public boolean insertQuestions(Questions questions) {
-		return this.insert(questions);
+	public void insertQuestions(Questions questions) {
+		this.insert(questions);
 	}
 
 	@Override
 	public boolean updateQuestions(Questions questions) {
-		return this.update(questions);
+		return this.updateById(questions);
 	}
 
 	@Override
 	public boolean deleteQuestions(Questions questions) {
-		return this.delete(questions);
+		return this.deleteById(questions);
 	}
 
 	@Override
-	public List<DBObject> listQuestions(DBObject obj) {
+	public List<Document> listQuestions(Document obj) {
 		return this.find(dbName, collection, obj);
 	}
 
 	@Override
-	public DBObject getQuestionsById(Object id) {
+	public Document getQuestionsById(Object id) {
 		return this.getById(dbName, collection, id);
 	}
 

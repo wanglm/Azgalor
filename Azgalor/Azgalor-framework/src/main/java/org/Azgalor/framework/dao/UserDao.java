@@ -3,19 +3,18 @@ package org.Azgalor.framework.dao;
 import java.util.List;
 
 import org.Azgalor.framework.entities.Users;
-
-import com.mongodb.DBObject;
+import org.bson.Document;
 
 public interface UserDao {
-	public boolean insertUser(Users user);
+	public void insertUser(Users user);
 
 	public boolean updateUser(Users user);
 
 	public boolean deleteUser(Users user);
 
-	public List<DBObject> listUser(DBObject obj);
+	public List<Document> listUser(Document doc);
 
-	public DBObject getUserById(Object id);
-	
-	public long countUsers(DBObject obj);
+	public Document getUserById(Object id);
+
+	public long countUsers(Document doc);
 }

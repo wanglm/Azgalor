@@ -4,8 +4,9 @@ import java.util.List;
 
 import org.Azgalor.framework.entities.Messages;
 import org.Azgalor.framework.entities.Questions;
+import org.bson.Document;
 
-import com.mongodb.DBObject;
+
 
 /**
  * 问卷和问题service
@@ -37,7 +38,7 @@ public interface QuestionService {
 	 * @param obj
 	 * @return List<Questions>
 	 */
-	public List<Questions> listQuestions(DBObject obj);
+	public List<Questions> listQuestions(Document obj);
 
 	/**
 	 * 查询指定id的问题

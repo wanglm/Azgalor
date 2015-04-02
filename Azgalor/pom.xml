@@ -16,7 +16,7 @@
 		<spring.version>4.0.5.RELEASE</spring.version>
 		<solr.version>4.10.0</solr.version>
 		<hadoop.version>2.6.0</hadoop.version>
-		<mongo-java-driver.version>2.13.0</mongo-java-driver.version>
+		<mongo-java-driver.version>3.0.0</mongo-java-driver.version>
 	</properties>
 
 	<dependencyManagement>

@@ -1,9 +1,7 @@
 package org.Azgalor.mongodb;
 
+import org.bson.Document;
 import org.bson.types.ObjectId;
-
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
 
 /**
  * mongodb存储对象基类
@@ -11,7 +9,7 @@ import com.mongodb.DBObject;
  * @author ming
  *
  */
-public abstract class MongoEntity<T> extends BasicDBObject {
+public abstract class MongoEntity<T> extends Document {
 	private static final long serialVersionUID = 5293439786916585037L;
 	protected ObjectId id;// 保存_id
 	protected String updateId;// 修改者id
@@ -77,9 +75,9 @@ public abstract class MongoEntity<T> extends BasicDBObject {
 	 * 查询转换成业务对象方法
 	 * 
 	 * @param obj
-	 *            DBObject
+	 *            Document
 	 * @return 业务对象
 	 */
-	public abstract T convert(DBObject obj);
+	public abstract T convert(Document doc);
 
 }

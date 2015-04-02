@@ -1,11 +1,12 @@
 package org.Azgalor.framework.entities;
 
 import java.util.List;
+import java.util.Map;
 
 import org.Azgalor.mongodb.MongoEntity;
+import org.bson.Document;
 
 import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
 
 public class Anwsers extends MongoEntity<Anwsers> {
 	private static final long serialVersionUID = -54780414053238859L;
@@ -76,7 +77,13 @@ public class Anwsers extends MongoEntity<Anwsers> {
 	}
 
 	@Override
-	public Anwsers convert(DBObject obj) {
+	public void putAll(Map<? extends String, ? extends Object> m) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public Anwsers convert(Document doc) {
 		// TODO Auto-generated method stub
 		return null;
 	}

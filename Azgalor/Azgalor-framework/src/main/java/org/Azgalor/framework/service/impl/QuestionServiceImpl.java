@@ -11,11 +11,12 @@ import org.Azgalor.framework.service.QuestionService;
 import org.Azgalor.mongodb.MongoFactory;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import com.mongodb.DBObject;
+
 
 @Service
 public class QuestionServiceImpl implements QuestionService {
@@ -30,7 +31,8 @@ public class QuestionServiceImpl implements QuestionService {
 		try {
 			QuestionDao dao = mf.get(QuestionDaoImpl.class);
 			if (questions.get("_id") == null) {
-				msg.setSuccess(dao.insertQuestions(questions));
+				dao.insertQuestions(questions);
+				msg.setSuccess(true);
 				msg.setMessage("问题添加成功！");
 			} else {
 				msg.setSuccess(dao.updateQuestions(questions));
@@ -56,19 +58,19 @@ public class QuestionServiceImpl implements QuestionService {
 	}
 
 	@Override
-	public List<Questions> listQuestions(DBObject obj) {
+	public List<Questions> listQuestions(Document obj) {
 		List<Questions> list = null;
 		try {
 			QuestionDao dao = mf.get(QuestionDaoImpl.class);
-			List<DBObject> _list = dao.listQuestions(obj);
+			List<Document> _list = dao.listQuestions(obj);
 			list = new ArrayList<Questions>(_list.size());
-			for (DBObject o : _list) {
+			for (Document o : _list) {
 				Questions questions = new Questions();
 				questions = questions.convert(o);
 				list.add(questions);
 			}
 		} catch (Exception e) {
-			log.error("listQuestions(DBObject obj)错误:", e);
+			log.error("listQuestions(Document obj)错误:", e);
 		}
 		return list;
 	}
@@ -78,7 +80,7 @@ public class QuestionServiceImpl implements QuestionService {
 		Questions questions = new Questions();
 		try {
 			QuestionDao dao = mf.get(QuestionDaoImpl.class);
-			DBObject obj = dao.getQuestionsById(id);
+			Document obj = dao.getQuestionsById(id);
 			questions = questions.convert(obj);
 		} catch (Exception e) {
 			log.error("findOneQuestions(String id)错误:", e);

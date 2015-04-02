@@ -12,18 +12,18 @@ public class QuestionnaireDaoImpl extends MongoDao<Questionnaire> implements
 		QuestionnaireDao {
 
 	@Override
-	public boolean insertQuestionnaire(Questionnaire questionnaire) {
-		return this.insert(questionnaire);
+	public void insertQuestionnaire(Questionnaire questionnaire) {
+		this.insert(questionnaire);
 	}
 
 	@Override
 	public boolean updateQuestionnaire(Questionnaire questionnaire) {
-		return this.update(questionnaire);
+		return this.updateById(questionnaire);
 	}
 
 	@Override
 	public boolean deleteQuestionnaire(Questionnaire questionnaire) {
-		return this.delete(questionnaire);
+		return this.deleteById(questionnaire);
 	}
 
 }

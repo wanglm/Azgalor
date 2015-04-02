@@ -1,10 +1,11 @@
 package org.Azgalor.framework.entities;
 
+import java.util.Map;
+
 import org.Azgalor.framework.config.UsersConfig;
 import org.Azgalor.mongodb.MongoEntity;
+import org.bson.Document;
 import org.bson.types.ObjectId;
-
-import com.mongodb.DBObject;
 
 public class Users extends MongoEntity<Users> {
 	private static final long serialVersionUID = -4611124040065321210L;
@@ -73,15 +74,20 @@ public class Users extends MongoEntity<Users> {
 	}
 
 	@Override
-	public Users convert(DBObject obj) {
-		this.setId((ObjectId) obj.get("_id"));
-		this.setName(obj.get("name").toString());
-		this.setPassWord(obj.get("passWord").toString());
-		this.setIdCard(obj.get("idCard").toString());
-		this.setBirthday(obj.get("birthday").toString());
-		this.setEmail(obj.get("email").toString());
-		return this;
+	public void putAll(Map<? extends String, ? extends Object> m) {
+		// TODO Auto-generated method stub
+
 	}
 
+	@Override
+	public Users convert(Document doc) {
+		this.setId((ObjectId) doc.get("_id"));
+		this.setName(doc.get("name").toString());
+		this.setPassWord(doc.get("passWord").toString());
+		this.setIdCard(doc.get("idCard").toString());
+		this.setBirthday(doc.get("birthday").toString());
+		this.setEmail(doc.get("email").toString());
+		return this;
+	}
 
 }

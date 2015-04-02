@@ -12,8 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
+
 
 @Controller
 @RequestMapping("User")
@@ -39,17 +38,17 @@ public class UserController {
 	@RequestMapping(params = "method=find")
 	@ResponseBody
 	public List<Users> find() {
-		DBObject obj = new BasicDBObject();
-		List<Users> list = userService.listUsers(obj);
-		return list;
+		/*DBObject obj = new BasicDBObject();
+		List<Users> list = userService.listUsers(obj);*/
+		return null;
 	}
 
 	@RequestMapping(params = "method=list")
 	public String list(Model model) {
-		DBObject obj = new BasicDBObject();
+		/*DBObject obj = new BasicDBObject();
 		List<Users> list = userService.listUsers(obj);
 		model.addAttribute("list", list);
-		model.addAttribute("totals", userService.countUsers(obj));
+		model.addAttribute("totals", userService.countUsers(obj));*/
 		return "users/UserShow";
 	}
 

@@ -8,9 +8,8 @@ import org.Azgalor.mongodb.annotations.MongoDBName;
 import org.Azgalor.mongodb.annotations.Mongoz;
 import org.Azgalor.mongodb.dao.MongoDao;
 import org.Azgalor.mongodb.enums.MongoType;
+import org.bson.Document;
 import org.springframework.stereotype.Repository;
-
-import com.mongodb.DBObject;
 
 @Repository
 @Mongoz(MongoType.SIMPLE)
@@ -19,32 +18,32 @@ import com.mongodb.DBObject;
 public class UserDaoImpl extends MongoDao<Users> implements UserDao {
 
 	@Override
-	public boolean insertUser(Users user) {
-		return this.insert(user);
+	public void insertUser(Users user) {
+		this.insert(user);
 	}
 
 	@Override
 	public boolean updateUser(Users user) {
-		return this.update(user);
+		return this.updateById(user);
 	}
 
 	@Override
 	public boolean deleteUser(Users user) {
-		return this.delete(user);
+		return this.deleteById(user);
 	}
 
 	@Override
-	public List<DBObject> listUser(DBObject obj) {
+	public List<Document> listUser(Document obj) {
 		return this.find(dbName, collection, obj);
 	}
 
 	@Override
-	public DBObject getUserById(Object id) {
+	public Document getUserById(Object id) {
 		return this.getById(dbName, collection, id);
 	}
 
 	@Override
-	public long countUsers(DBObject obj) {
+	public long countUsers(Document obj) {
 		return this.count(dbName, collection, obj);
 	}
 
