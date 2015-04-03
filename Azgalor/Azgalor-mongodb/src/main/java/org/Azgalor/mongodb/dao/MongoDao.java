@@ -2,9 +2,11 @@ package org.Azgalor.mongodb.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.Azgalor.mongodb.MongoEntity;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 
 import com.mongodb.MongoClient;
 import com.mongodb.client.FindIterable;
@@ -27,8 +29,11 @@ public abstract class MongoDao<T extends MongoEntity<?>> {
 	protected String dbName;
 	protected String collection;
 
-	@SuppressWarnings("unused")
-	private void setMc(MongoClient mc) {
+	public MongoDao() {
+
+	}
+
+	public void setMc(MongoClient mc) {
 		this.mc = mc;
 	}
 
@@ -36,8 +41,7 @@ public abstract class MongoDao<T extends MongoEntity<?>> {
 		return dbName;
 	}
 
-	@SuppressWarnings("unused")
-	private void setDbName(String dbName) {
+	public void setDbName(String dbName) {
 		this.dbName = dbName;
 	}
 
@@ -45,8 +49,7 @@ public abstract class MongoDao<T extends MongoEntity<?>> {
 		return collection;
 	}
 
-	@SuppressWarnings("unused")
-	private void setCollection(String collection) {
+	public void setCollection(String collection) {
 		this.collection = collection;
 	}
 
@@ -59,7 +62,7 @@ public abstract class MongoDao<T extends MongoEntity<?>> {
 		MongoCollection<Document> dc = this.getCollection(dbName, collection);
 		t.setCreateId("ming");// 需要修改
 		t.setCreateTime(System.currentTimeMillis());
-		dc.insertOne(t);
+		dc.insertOne(t.toDocument());
 	}
 
 	public void insertMany(List<T> list) {
@@ -76,7 +79,7 @@ public abstract class MongoDao<T extends MongoEntity<?>> {
 		t.setUpdateId("ming");// 需要改
 		t.setUpdateTime(System.currentTimeMillis());
 		UpdateResult ur = dc.updateOne(eq("_id", t.getId()), new Document(
-				"$set", t));// 更新属性，如果直接用t则是替换更新
+				"$set", t.toDocument()));// 更新属性，如果直接用t则是替换更新
 		return ur.getModifiedCount() == 1L;
 	}
 
@@ -126,10 +129,15 @@ public abstract class MongoDao<T extends MongoEntity<?>> {
 	public List<Document> find(String dbName, String collection, Document doc) {
 		List<Document> list = new ArrayList<Document>();
 		MongoCursor<Document> cursor = null;
+		FindIterable<Document> fi = null;
 		try {
 			MongoCollection<Document> dc = this.getCollection(dbName,
 					collection);
-			FindIterable<Document> fi = dc.find(doc);
+			if (doc == null) {
+				fi = dc.find();
+			} else {
+				fi = dc.find(MongoDao.MongoAnd(doc));
+			}
 			cursor = fi.iterator();
 			while (cursor.hasNext()) {
 				list.add(cursor.next());
@@ -140,9 +148,22 @@ public abstract class MongoDao<T extends MongoEntity<?>> {
 		return list;
 	}
 
-	public long count(String dbName, String collection, Document obj) {
+	public long count(String dbName, String collection, Document doc) {
 		MongoCollection<Document> dc = this.getCollection(dbName, collection);
-		return dc.count(obj);
+		return dc.count(MongoDao.MongoAnd(doc));
+	}
+
+	/**
+	 * 多条件查询过滤器
+	 * 
+	 * @param doc
+	 * @return
+	 */
+	private static Bson MongoAnd(Document doc) {
+		List<Bson> list = doc.entrySet().stream().map(e -> {
+			return eq(e.getKey(), e.getValue());
+		}).collect(Collectors.toList());
+		return and(list);
 	}
 
 }

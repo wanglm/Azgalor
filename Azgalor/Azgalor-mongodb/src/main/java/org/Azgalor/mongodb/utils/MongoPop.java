@@ -13,7 +13,7 @@ public enum MongoPop {
 	private MongoPop() {
 		Properties _prop = new Properties();
 		try {
-			_prop.load(MongoPop.class.getResourceAsStream("mongodb.properties"));
+			_prop.load(MongoPop.class.getResourceAsStream("/mongodb.properties"));
 			this.prop = _prop;
 		} catch (IOException e) {
 			Logger log = LogManager.getLogger(MongoPop.class);

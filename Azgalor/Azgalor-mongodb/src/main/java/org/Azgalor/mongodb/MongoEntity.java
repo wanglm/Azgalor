@@ -72,6 +72,16 @@ public abstract class MongoEntity<T> extends Document {
 	}
 
 	/**
+	 * 蛋疼的mongodb 3，有bug，只能保存Document，子类是会报错的
+	 * 
+	 * @return
+	 */
+	public Document toDocument() {
+		Document doc = Document.parse(this.toJson());
+		return doc;
+	}
+
+	/**
 	 * 查询转换成业务对象方法
 	 * 
 	 * @param obj

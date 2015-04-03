@@ -13,7 +13,7 @@ public enum HadoopPop {
 	private HadoopPop() {
 		Properties _prop = new Properties();
 		try {
-			_prop.load(HadoopPop.class.getResourceAsStream("hadoop.properties"));
+			_prop.load(HadoopPop.class.getResourceAsStream("/hadoop.properties"));
 			this.prop = _prop;
 		} catch (IOException e) {
 			Logger log = LogManager.getLogger(HadoopPop.class);
