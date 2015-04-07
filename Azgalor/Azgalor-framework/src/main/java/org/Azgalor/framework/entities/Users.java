@@ -81,7 +81,7 @@ public class Users extends MongoEntity<Users> {
 
 	@Override
 	public Users convert(Document doc) {
-		this.setId((ObjectId) doc.get("_id"));
+		//this.setId((ObjectId) doc.get("_id"));
 		this.setName(doc.get("name").toString());
 		this.setPassWord(doc.get("passWord").toString());
 		this.setIdCard(doc.get("idCard").toString());

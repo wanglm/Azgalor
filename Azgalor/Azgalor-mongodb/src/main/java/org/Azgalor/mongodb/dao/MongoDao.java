@@ -78,7 +78,7 @@ public abstract class MongoDao<T extends MongoEntity<?>> {
 		MongoCollection<Document> dc = this.getCollection(dbName, collection);
 		t.setUpdateId("ming");// 需要改
 		t.setUpdateTime(System.currentTimeMillis());
-		UpdateResult ur = dc.updateOne(eq("_id", t.getId()), new Document(
+		UpdateResult ur = dc.updateOne(eq("_id", t.getObjectId("_id")), new Document(
 				"$set", t.toDocument()));// 更新属性，如果直接用t则是替换更新
 		return ur.getModifiedCount() == 1L;
 	}
@@ -102,7 +102,7 @@ public abstract class MongoDao<T extends MongoEntity<?>> {
 
 	public boolean deleteById(T t) {
 		MongoCollection<Document> dc = this.getCollection(dbName, collection);
-		DeleteResult dr = dc.deleteOne(eq("_id", t.getId()));
+		DeleteResult dr = dc.deleteOne(eq("_id", t.getObjectId("_id")));
 		return dr.getDeletedCount() == 1L;
 	}
 

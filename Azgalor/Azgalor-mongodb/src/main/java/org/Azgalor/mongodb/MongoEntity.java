@@ -1,5 +1,6 @@
 package org.Azgalor.mongodb;
 
+import org.apache.commons.lang3.StringUtils;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
@@ -11,18 +12,19 @@ import org.bson.types.ObjectId;
  */
 public abstract class MongoEntity<T> extends Document {
 	private static final long serialVersionUID = 5293439786916585037L;
-	protected ObjectId id;// 保存_id
+	protected String id;// 保存_id
 	protected String updateId;// 修改者id
 	protected Long updateTime;// 修改时间
 	protected String createId;// 建立者id
 	protected Long createTime;// 建立时间
 	protected String description;// 备注
 
-	public ObjectId getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(ObjectId id) {
+	public void setId(String id) {
+		this.put("_id", new ObjectId(id));
 		this.id = id;
 	}
 
@@ -69,6 +71,38 @@ public abstract class MongoEntity<T> extends Document {
 	public void setDescription(String description) {
 		this.put("description", description);
 		this.description = description;
+	}
+
+	/**
+	 * 默认属性设置
+	 * 
+	 * @param doc
+	 */
+	public void doSetDefault(Document doc) {
+		ObjectId id = doc.getObjectId("_id");
+		if (id != null) {
+			this.setId(id.toString());
+		}
+		String cId = (String) doc.get("createId");
+		if (StringUtils.isNotBlank(cId)) {
+			this.setCreateId(cId);
+		}
+		Long ct = (Long) doc.get("createTime");
+		if (ct != null) {
+			this.setCreateTime(ct);
+		}
+		String dsc = (String) doc.get("description");
+		if (StringUtils.isNotBlank(dsc)) {
+			this.setDescription(dsc);
+		}
+		String uId = (String) doc.get("updateId");
+		if (StringUtils.isNotBlank(uId)) {
+			this.setUpdateId(uId);
+		}
+		Long ut = (Long) doc.get("updateTime");
+		if (ut != null) {
+			this.setUpdateTime(ut);
+		}
 	}
 
 	/**

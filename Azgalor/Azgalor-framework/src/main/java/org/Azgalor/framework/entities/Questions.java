@@ -58,7 +58,7 @@ public class Questions extends MongoEntity<Questions> {
 	@Override
 	public Questions convert(Document doc) {
 		// 该方法3.0以下版本，mongodb 3.0以上估计有错
-		this.setId((ObjectId) doc.get("_id"));
+		//this.setId((ObjectId) doc.get("_id"));
 		this.setTitle(doc.get("title").toString());// 获取标题
 		this.setType(Integer.valueOf(doc.get("type").toString()));// 获取类型
 		BasicDBList options = (BasicDBList) doc.get("options");// 获取选项值
