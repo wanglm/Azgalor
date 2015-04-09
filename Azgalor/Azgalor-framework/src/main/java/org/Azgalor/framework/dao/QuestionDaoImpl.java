@@ -3,7 +3,7 @@ package org.Azgalor.framework.dao;
 import java.util.List;
 
 import org.Azgalor.framework.entities.Questions;
-import org.Azgalor.mongodb.annotations.MongoCollection;
+import org.Azgalor.mongodb.annotations.MongoCollections;
 import org.Azgalor.mongodb.annotations.MongoDBName;
 import org.Azgalor.mongodb.annotations.Mongoz;
 import org.Azgalor.mongodb.dao.MongoDao;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @Mongoz(MongoType.SIMPLE)
-@MongoCollection("question")
+@MongoCollections("question")
 @MongoDBName("azgalor")
 public class QuestionDaoImpl extends MongoDao<Questions> implements QuestionDao {
 
@@ -34,12 +34,12 @@ public class QuestionDaoImpl extends MongoDao<Questions> implements QuestionDao 
 
 	@Override
 	public List<Document> listQuestions(Document obj) {
-		return this.find(dbName, collection, obj);
+		return this.find(obj);
 	}
 
 	@Override
 	public Document getQuestionsById(Object id) {
-		return this.getById(dbName, collection, id);
+		return this.getById(id);
 	}
 
 }

@@ -21,7 +21,7 @@ public enum HadoopPop {
 		}
 	}
 
-	public Properties get() {
+	public final Properties get() {
 		return this.prop;
 	}
 }

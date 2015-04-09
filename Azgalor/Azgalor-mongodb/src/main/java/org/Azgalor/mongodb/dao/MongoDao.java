@@ -4,7 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.Azgalor.mongodb.MongoDB;
 import org.Azgalor.mongodb.MongoEntity;
+import org.Azgalor.mongodb.annotations.MongoCollections;
+import org.Azgalor.mongodb.annotations.MongoDBName;
+import org.Azgalor.mongodb.annotations.Mongoz;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
@@ -25,32 +31,42 @@ import static com.mongodb.client.model.Filters.*;
  * @param <T>
  */
 public abstract class MongoDao<T extends MongoEntity<?>> {
-	protected MongoClient mc;
-	protected String dbName;
-	protected String collection;
+	private Logger log = LogManager.getLogger(MongoDao.class);
+	private MongoClient mc;
+	private String dbName;
+	private String collection;
 
 	public MongoDao() {
+		try {
+			Class<?> clz = this.getClass();
+			Mongoz mz = clz.getAnnotation(Mongoz.class);
+			this.dbName = clz.getAnnotation(MongoDBName.class).value();
+			this.collection = clz.getAnnotation(MongoCollections.class).value();
+			switch (mz.value()) {
+			case CLOUD: {
+				this.mc = MongoDB.CLOUD.get();
+				break;
+			}
+			default: {
+				this.mc = MongoDB.SIMPLE.get();
+			}
+			}
 
+		} catch (SecurityException e) {
+			log.error("MongoDao 初始化错误：", e);
+		}
 	}
 
-	public void setMc(MongoClient mc) {
-		this.mc = mc;
+	public MongoClient getMc() {
+		return mc;
 	}
 
 	public String getDbName() {
 		return dbName;
 	}
 
-	public void setDbName(String dbName) {
-		this.dbName = dbName;
-	}
-
 	public String getCollection() {
 		return collection;
-	}
-
-	public void setCollection(String collection) {
-		this.collection = collection;
 	}
 
 	public MongoCollection<Document> getCollection(String dbName,
@@ -78,8 +94,8 @@ public abstract class MongoDao<T extends MongoEntity<?>> {
 		MongoCollection<Document> dc = this.getCollection(dbName, collection);
 		t.setUpdateId("ming");// 需要改
 		t.setUpdateTime(System.currentTimeMillis());
-		UpdateResult ur = dc.updateOne(eq("_id", t.getObjectId("_id")), new Document(
-				"$set", t.toDocument()));// 更新属性，如果直接用t则是替换更新
+		UpdateResult ur = dc.updateOne(eq("_id", t.getObjectId("_id")),
+				new Document("$set", t.toDocument()));// 更新属性，如果直接用t则是替换更新
 		return ur.getModifiedCount() == 1L;
 	}
 
@@ -112,7 +128,7 @@ public abstract class MongoDao<T extends MongoEntity<?>> {
 		return dr.getDeletedCount() > 0L;
 	}
 
-	public Document getById(String dbName, String collection, Object id) {
+	public Document getById(Object id) {
 		MongoCollection<Document> dc = this.getCollection(dbName, collection);
 		FindIterable<Document> fi = dc.find(eq("_id", id));
 		return fi.first();
@@ -126,7 +142,7 @@ public abstract class MongoDao<T extends MongoEntity<?>> {
 	 * @param doc
 	 * @return
 	 */
-	public List<Document> find(String dbName, String collection, Document doc) {
+	public List<Document> find(Document doc) {
 		List<Document> list = new ArrayList<Document>();
 		MongoCursor<Document> cursor = null;
 		FindIterable<Document> fi = null;
@@ -148,7 +164,7 @@ public abstract class MongoDao<T extends MongoEntity<?>> {
 		return list;
 	}
 
-	public long count(String dbName, String collection, Document doc) {
+	public long count(Document doc) {
 		MongoCollection<Document> dc = this.getCollection(dbName, collection);
 		return dc.count(MongoDao.MongoAnd(doc));
 	}

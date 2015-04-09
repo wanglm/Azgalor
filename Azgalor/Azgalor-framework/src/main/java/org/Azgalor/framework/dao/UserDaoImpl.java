@@ -3,7 +3,7 @@ package org.Azgalor.framework.dao;
 import java.util.List;
 
 import org.Azgalor.framework.entities.Users;
-import org.Azgalor.mongodb.annotations.MongoCollection;
+import org.Azgalor.mongodb.annotations.MongoCollections;
 import org.Azgalor.mongodb.annotations.MongoDBName;
 import org.Azgalor.mongodb.annotations.Mongoz;
 import org.Azgalor.mongodb.dao.MongoDao;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Mongoz(MongoType.SIMPLE)
 @MongoDBName("azgalor")
-@MongoCollection("users")
+@MongoCollections("users")
 public class UserDaoImpl extends MongoDao<Users> implements UserDao {
 
 	@Override
@@ -34,17 +34,17 @@ public class UserDaoImpl extends MongoDao<Users> implements UserDao {
 
 	@Override
 	public List<Document> listUser(Document obj) {
-		return this.find(dbName, collection, obj);
+		return this.find(obj);
 	}
 
 	@Override
 	public Document getUserById(Object id) {
-		return this.getById(dbName, collection, id);
+		return this.getById(id);
 	}
 
 	@Override
 	public long countUsers(Document obj) {
-		return this.count(dbName, collection, obj);
+		return this.count(obj);
 	}
 
 }

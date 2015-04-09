@@ -14,7 +14,7 @@ public enum HadoopConfig {
 		this.conf=_conf;
 	}
 
-	public Configuration getConfiguration() {
+	public final Configuration getConfiguration() {
 		return this.conf;
 	}
 }
