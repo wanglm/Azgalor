@@ -18,7 +18,7 @@
 
 <configuration>
 	<property>
-		<name>mapred.job.tracker.address</name>
-		<value>master:9001</value>
-	</property>
+        <name>mapreduce.framework.name</name>
+        <value>yarn</value>
+    </property>
 </configuration>

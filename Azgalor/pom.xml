@@ -17,6 +17,7 @@
 		<solr.version>4.10.0</solr.version>
 		<hadoop.version>2.6.0</hadoop.version>
 		<mongo-java-driver.version>3.0.0</mongo-java-driver.version>
+		<java.home>/myWork/tools/java/jdk1.8.0_31</java.home>
 	</properties>
 
 	<dependencyManagement>
@@ -25,7 +26,7 @@
 				<groupId>jdk.tools</groupId>
 				<artifactId>jdk.tools</artifactId>
 				<scope>system</scope>
-				<systemPath>${JAVA_HOME}/lib/tools.jar</systemPath>
+				<systemPath>${java.home}/lib/tools.jar</systemPath>
 				<version>1.8</version>
 			</dependency>
 			<dependency>

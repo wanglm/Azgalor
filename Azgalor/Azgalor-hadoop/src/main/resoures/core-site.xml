@@ -19,12 +19,12 @@
 <configuration>
 	<property>
 		<name>fs.defaultFS</name>
-		<value>hdfs://master:9000</value>
+		<value>hdfs://localhost:9000</value>
 		<description>the name of the default file system</description>
 	</property>
 	<property>
 		<name>hadoop.tmp.dir</name>
-		<value>/tools/hadoop/tmp</value>
+		<value>/myWork/tools/hadoop/tmp</value>
 		<description>tmporary directories</description>
 	</property>
 </configuration>

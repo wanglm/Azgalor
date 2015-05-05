@@ -11,6 +11,7 @@ public enum HadoopConfig {
 		_conf.addResource("core-site.xml");
 		_conf.addResource("hdfs-site.xml");
 		_conf.addResource("mapred-site.xml");
+		_conf.addResource("yarn-site.xml");
 		this.conf=_conf;
 	}
 

@@ -2,6 +2,8 @@ package org.Azgalor.hadoop.input;
 
 import java.io.IOException;
 
+import org.Azgalor.hadoop.annotations.Where;
+import org.Azgalor.hadoop.eumuns.Logic;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -25,18 +27,42 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.FileSplit;
 import org.apache.hadoop.mapreduce.lib.input.SplitLineReader;
 
+import com.google.common.base.Charsets;
+
+/**自定义的inputformat，主要源码来自默认的TextLineInputFormat
+ * @author ming
+ *
+ */
+@Where(key="date",value="xxx",logic=Logic.EQ)
 public class LogInputFormat extends FileInputFormat<Text, Text> {
 	private static final Log LOG = LogFactory.getLog(LogInputFormat.class);
-	/**
-	 * 自定义的成员变量=正则表达式
-	 */
-	private String regex;
 
 	@Override
 	public RecordReader<Text, Text> createRecordReader(InputSplit split,
 			TaskAttemptContext context) throws IOException,
 			InterruptedException {
-		return this.new LogRecordReader(regex);
+		String delimiter = context.getConfiguration().get(
+				"textinputformat.record.delimiter");
+		byte[] recordDelimiterBytes = null;
+		if (null != delimiter) {
+			recordDelimiterBytes = delimiter.getBytes(Charsets.UTF_8);
+		}
+		LogRecordReader logReader=null;
+		String regex=null;
+		/*try {
+			//注解的方式传值，当然要是动态改变的话，貌似只能动Configuration了。。。现在不实现
+			Class<?> clz=context.getInputFormatClass();
+			Where where=clz.getAnnotation(Where.class);
+			if(where!=null){
+				regex="";//想个方法弄出正则才行。。。现在想不出来...
+			}
+			logReader=this.new LogRecordReader(recordDelimiterBytes, regex);
+		} catch (ClassNotFoundException e) {
+			LOG.error("反射获取inputFormatClass出错：", e);
+			throw new IOException(e);
+		}*/
+		logReader=this.new LogRecordReader(recordDelimiterBytes, regex);
+		return logReader;
 	}
 
 	public class LogRecordReader extends RecordReader<Text, Text> {
@@ -58,9 +84,13 @@ public class LogInputFormat extends FileInputFormat<Text, Text> {
 		 * 自定义的成员变量=正则表达式
 		 */
 		private String regex;
+		private String[] strs;
 
-		public LogRecordReader(String regex) {
-			super();
+		public LogRecordReader() {
+		}
+
+		public LogRecordReader(byte[] recordDelimiterBytes, String regex) {
+			this.recordDelimiterBytes = recordDelimiterBytes;
 			this.regex = regex;
 		}
 
@@ -189,11 +219,16 @@ public class LogInputFormat extends FileInputFormat<Text, Text> {
 					newSize = in.readLine(lineText, maxLineLength,
 							maxBytesToConsume(pos));
 					if (StringUtils.isBlank(regex)) {
-						// 读取一行数据，分割成数组获取想要的数据，但是以后估计会改成正则表达式选取
-						LOG.info("自定义读取一行数据： "+lineText.toString());
-						String[] strs = lineText.toString().split(",");
-						key.set(strs[0]);
-						value.set(strs[1]);
+						// 读取一行数据，分割成数组获取想要的数据，但是以后估计会改成正则表达式选取,而且格式化数据切分选取会有错误问题，无法解决目前
+						strs = lineText.toString().trim().split(",");
+						if(strs.length>=2){
+							key.set(strs[0]);
+							value.set(strs[1]);
+						}else{
+							for(String s:strs){
+								LOG.info("特殊的长度>2的行："+s);
+							}
+						}
 					}
 					pos += newSize;
 				}
