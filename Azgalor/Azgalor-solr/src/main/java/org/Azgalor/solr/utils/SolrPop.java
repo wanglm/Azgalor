@@ -15,7 +15,7 @@ public enum SolrPop {
 	private SolrPop() {
 		Properties _prop = new Properties();
 		try {
-			_prop.load(SolrPop.class.getResourceAsStream("solr.properties"));
+			_prop.load(SolrPop.class.getResourceAsStream("/solr.properties"));
 			this.prop = _prop;
 		} catch (IOException e) {
 			Logger log = LogManager.getLogger(SolrPop.class);

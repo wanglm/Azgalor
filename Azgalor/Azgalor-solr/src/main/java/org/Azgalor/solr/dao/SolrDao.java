@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.util.List;
 
 import org.Azgalor.solr.SolrEntity;
+import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
-import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.client.solrj.response.UpdateResponse;
@@ -13,14 +13,13 @@ import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 
 public abstract class SolrDao<T extends SolrEntity> {
-	private SolrServer solr;
+	private SolrClient solr;
 
-	@SuppressWarnings("unused")
-	private void setSolr(SolrServer solr) {
+	protected void setSolr(SolrClient solr) {
 		this.solr = solr;
 	}
 
-	private void commit() throws SolrServerException, IOException {
+	public void commit() throws SolrServerException, IOException {
 		solr.optimize();
 		solr.commit();
 	};
@@ -38,7 +37,7 @@ public abstract class SolrDao<T extends SolrEntity> {
 		return ur.getStatus() == 0 ? false : true;
 	}
 
-	public SolrDocument getById(String id) throws SolrServerException {
+	public SolrDocument getById(String id) throws SolrServerException, IOException {
 		SolrQuery sq = new SolrQuery();
 		sq.setQuery("id:" + id);
 		QueryResponse qr = solr.query(sq);
@@ -46,7 +45,7 @@ public abstract class SolrDao<T extends SolrEntity> {
 		return solrList.get(0);
 	}
 
-	public SolrDocumentList list(String str) throws SolrServerException {
+	public SolrDocumentList list(String str) throws SolrServerException, IOException {
 		SolrQuery sq = new SolrQuery();
 		sq.setQuery(str);
 		QueryResponse qr = solr.query(sq);

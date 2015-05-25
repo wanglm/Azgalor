@@ -17,11 +17,12 @@ import org.apache.solr.client.solrj.impl.LBHttpSolrServer;
  * @Email ysuwlm@Gmail.com
  *
  */
-public enum SolrClient {
+@Deprecated
+public enum SolrOldClient {
 	SIMPLE(true), CLOUD(false);
 	private SolrServer solr;
 
-	private SolrClient(boolean isSimple) {
+	private SolrOldClient(boolean isSimple) {
 		try {
 			Properties prop = SolrPop.INSTANCE.get();
 			String solrHost = prop.getProperty("solrHost");
@@ -33,17 +34,17 @@ public enum SolrClient {
 				hss.setMaxTotalConnections(1000);
 				hss.setFollowRedirects(true);
 				hss.setAllowCompression(true);// 压缩
-				this.solr = hss;
+				//this.solr = hss;
 			} else {
 				String zkHost = solrHost;
 				LBHttpSolrServer lbServer = new LBHttpSolrServer(solrHost);
 				CloudSolrServer css = new CloudSolrServer(zkHost, lbServer);
 				css.setZkClientTimeout(60 * 1000);// zookeeper超时时间
 				css.setZkConnectTimeout(60 * 1000);// zookeeper连接超时
-				this.solr = css;
+				//this.solr = css;
 			}
 		} catch (Exception e) {
-			Logger log = LogManager.getLogger(SolrClient.class);
+			Logger log = LogManager.getLogger(SolrOldClient.class);
 			log.error("Solr的服务器连接单例初始化错误：", e);
 		}
 	}

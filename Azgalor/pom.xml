@@ -14,7 +14,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<spring.version>4.0.5.RELEASE</spring.version>
-		<solr.version>4.10.0</solr.version>
+		<solr.version>5.1.0</solr.version>
 		<hadoop.version>2.6.0</hadoop.version>
 		<mongo-java-driver.version>3.0.0</mongo-java-driver.version>
 		<java.home>/myWork/tools/java/jdk1.8.0_31</java.home>
@@ -22,13 +22,13 @@
 
 	<dependencyManagement>
 		<dependencies>
-			<dependency>
+			<!-- <dependency>
 				<groupId>jdk.tools</groupId>
 				<artifactId>jdk.tools</artifactId>
 				<scope>system</scope>
 				<systemPath>${java.home}/lib/tools.jar</systemPath>
 				<version>1.8</version>
-			</dependency>
+			</dependency> -->
 			<dependency>
 				<groupId>ognl</groupId>
 				<artifactId>ognl</artifactId>
@@ -69,11 +69,17 @@
 				<artifactId>jsp-api</artifactId>
 				<version>2.0</version>
 				<scope>provided</scope>
+				<exclusions>
+					<exclusion>
+						<artifactId>servlet-api</artifactId>
+						<groupId>javax.servlet</groupId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 			<dependency>
 				<groupId>javax.servlet</groupId>
-				<artifactId>servlet-api</artifactId>
-				<version>2.4</version>
+				<artifactId>javax.servlet-api</artifactId>
+				<version>3.1.0</version>
 				<scope>provided</scope>
 			</dependency>
 			<dependency>
@@ -225,7 +231,7 @@
 				<artifactId>hadoop-client</artifactId>
 				<version>${hadoop.version}</version>
 			</dependency>
-			<!-- mongodb end -->
+			<!-- hadoop end -->
 			
 			<!-- mongodb start -->
 			<dependency>

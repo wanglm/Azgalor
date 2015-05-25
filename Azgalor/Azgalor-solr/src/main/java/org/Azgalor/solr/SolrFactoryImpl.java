@@ -5,7 +5,7 @@ import java.lang.reflect.Method;
 
 import org.Azgalor.solr.annotations.SolrType;
 import org.Azgalor.solr.dao.SolrDao;
-import org.apache.solr.client.solrj.SolrServer;
+import org.apache.solr.client.solrj.SolrClient;
 
 public class SolrFactoryImpl implements SolrFactory {
 
@@ -15,16 +15,16 @@ public class SolrFactoryImpl implements SolrFactory {
 			IllegalAccessException, IllegalArgumentException,
 			InvocationTargetException, InstantiationException {
 		SolrType solrType = clz.getAnnotation(SolrType.class);
-		Method setSolr = clz.getMethod("setSolr", SolrServer.class);
+		Method setSolr = clz.getMethod("setSolr", SearchClient.class);
 		T t = clz.newInstance();
-		SolrServer solr = null;
+		SolrClient solr = null;
 		switch (solrType.value()) {
 		case CLOUD: {
-			solr = SolrClient.CLOUD.get();
+			solr = SearchClient.CLOUD.get();
 			break;
 		}
 		default: {
-			solr = SolrClient.SIMPLE.get();
+			solr = SearchClient.SIMPLE.get();
 			break;
 		}
 		}

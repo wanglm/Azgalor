@@ -1,7 +1,6 @@
 package org.Azgalor.hadoop.mapreduce;
 
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.LinkedList;
 
 import org.Azgalor.hadoop.HadoopConfig;
